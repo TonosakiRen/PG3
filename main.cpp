@@ -2,43 +2,51 @@
 #include <iostream>
 #include <assert.h>
 #include <cmath>
-int SpCalculationHourly(int hourly,int hours) {
-	assert(hours >= 0);
-	if (hours <= 0) {
-		return 0;
+#include <cstdlib>
+#include <Windows.h>
+
+int Rand(int min, int max) {
+	return min + (int)(rand() * (max - min + 1.0) / (1.0 + RAND_MAX));
+}
+
+typedef void (*Pfunc)(bool,int);
+
+void setTimeout(Pfunc p, int second,bool isEven,int answer) {
+	Sleep(second * 1000);
+	p(isEven,answer);
+}
+
+void Result(bool isEven, int answer) {
+	int answerRemainder = answer % 2;
+	if (isEven == true && answerRemainder == 0) {
+		std::cout << "正解！" << std::endl;
 	}
-	return  hourly + SpCalculationHourly(hourly * 2 - 50, hours - 1);
-}
-
-int CalculationHourly(int hourly, int hours) {
-	assert(hours >= 0);
-	return hours * hourly;
-}
-
-template <typename Type>
-void Print(Type a) {
-	std::cout << typeid(Type).name() << ":" << a << "\n";
-}
-template <>
-void Print<char>(char a) {
-	std::cout << "数字以外は代入できません" << "\n";
+	else if (isEven == true && answerRemainder == 1) {
+		std::cout << "不正解！" << std::endl;
+	}
+	else if (isEven == false && answerRemainder == 0) {
+		std::cout << "不正解！" << std::endl;
+	}
+	else if (isEven == true && answerRemainder == 1) {
+		std::cout << "正解！" << std::endl;
+	}
+	std::cout << "答えは" << answer << std::endl;
 }
 
 int main() {
-	for (int i = 0; i < 12; i++) {
-		std::cout << i + 1 << "時間の場合" << std::endl;
-		int a = SpCalculationHourly(100, i + 1);
-		int b = CalculationHourly(1072, i + 1);
-		int diff = abs(a - b);
-		std::cout << b << "円普通賃貸系" << std::endl;
-		std::cout << a << "円特殊賃貸系" << std::endl;
-		if (a < b) {
-			std::cout << diff << "円普通賃貸系のほうが高い\n\n";
+	srand(static_cast<unsigned int>(time(nullptr)));
+	while (true) {
+		int randNum = Rand(0, 6);
+		int isEven = 0;
+		while (true) {
+			std::cout << "偶数なら１、奇数なら０を入力してください" << std::endl;
+			scanf_s("%d", &isEven);
+			if (isEven == 0 || isEven == 1) {
+				break;
+			}
 		}
-		else {
-			std::cout << diff << "円特殊賃貸系のほうが高い\n\n";
-		}
-
+		Pfunc p = Result;
+		setTimeout(p,3,static_cast<bool>(isEven),randNum);
 	}
 	return 0;
 }
