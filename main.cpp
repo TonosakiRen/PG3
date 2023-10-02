@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <cmath>
 int SpCalculationHourly(int hourly,int hours) {
-	assert(hours < 0);
+	assert(hours >= 0);
 	if (hours <= 0) {
 		return 0;
 	}
@@ -11,7 +11,7 @@ int SpCalculationHourly(int hourly,int hours) {
 }
 
 int CalculationHourly(int hourly, int hours) {
-	assert(hours < 0);
+	assert(hours >= 0);
 	return hours * hourly;
 }
 
@@ -25,16 +25,21 @@ void Print<char>(char a) {
 }
 
 int main() {
-	int a = SpCalculationHourly(100,5);
-	int b = CalculationHourly(1072, 5);
-	int diff = abs(a - b);
-	if (a < b) {
-		std::cout << b << "円で普通賃金体系のほうが";
-	}
-	else {
-		std::cout << a << "円で特殊賃金体系のほうが";
-	}	
+	for (int i = 0; i < 12; i++) {
+		std::cout << i + 1 << "時間の場合" << std::endl;
+		int a = SpCalculationHourly(100, i + 1);
+		int b = CalculationHourly(1072, i + 1);
+		int diff = abs(a - b);
+		std::cout << b << "円普通賃貸系" << std::endl;
+		std::cout << a << "円特殊賃貸系" << std::endl;
+		if (a < b) {
+			std::cout << diff << "円普通賃貸系のほうが高い\n\n";
+		}
+		else {
+			std::cout << diff << "円特殊賃貸系のほうが高い\n\n";
+		}
 
+	}
 	return 0;
 }
 
