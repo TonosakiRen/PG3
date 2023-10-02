@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <Windows.h>
+#include <functional>
 
 int Rand(int min, int max) {
 	return min + (int)(rand() * (max - min + 1.0) / (1.0 + RAND_MAX));
@@ -11,10 +12,6 @@ int Rand(int min, int max) {
 
 typedef void (*Pfunc)(bool,int);
 
-void setTimeout(Pfunc p, int second,bool isEven,int answer) {
-	Sleep(second * 1000);
-	p(isEven,answer);
-}
 
 void Result(bool isEven, int answer) {
 	int answerRemainder = answer % 2;
@@ -45,8 +42,9 @@ int main() {
 				break;
 			}
 		}
-		Pfunc p = Result;
-		setTimeout(p,3,static_cast<bool>(isEven),randNum);
+		std::function<void(int)> fx = [](int second) {Sleep(second * 1000); };
+		fx(3);
+		Result(static_cast<bool>(isEven), randNum);
 	}
 	return 0;
 }
