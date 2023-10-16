@@ -61,7 +61,7 @@ int main() {
 			std::cout << "やったか！？" << std::endl;
 			break;
 		}
-		Sleep(1000.0f*(1.0f / 60.0f));
+		Sleep(static_cast<DWORD>(1000.0f*(1.0f / 60.0f)));
 	}
 	return 0;
 }
