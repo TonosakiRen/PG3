@@ -19,7 +19,7 @@ public:
 
 		statsNum
 	};
-	Stats stats_ = approach;
+	Stats stats_ = retreat;
 	int frame_ = 0;
 private:
 	static void (Enemy::*spFuncTable[])();
@@ -32,17 +32,16 @@ void (Enemy::* Enemy::spFuncTable[])() = {
 };
 
 void Enemy::Update() {
-	frame_++;
-	if (frame_ % 60 == 0) {
+	if (frame_ % 30 == 0) {
 		if (static_cast<int>(statsNum) == static_cast<Stats>(static_cast<int>(stats_) + 1)) {
 			stats_ = static_cast<Stats>(0);
 		}
 		else {
 			stats_ = static_cast<Stats>(static_cast<int>(stats_) + 1);
 		}
+		(this->*spFuncTable[static_cast<size_t>(stats_)])();
 	}
-	(this->*spFuncTable[static_cast<size_t>(stats_)])();
-
+	frame_++;
 }
 void Enemy::Approach() {
 	std::cout << "接近中" << std::endl;
@@ -58,9 +57,11 @@ int main() {
 	Enemy enemy;
 	while (true) {
 		enemy.Update();
-		if (enemy.frame_ >= 1000) {
+		if (enemy.frame_ >= 300) {
+			std::cout << "やったか！？" << std::endl;
 			break;
 		}
+		Sleep(1000.0f*(1.0f / 60.0f));
 	}
 	return 0;
 }
