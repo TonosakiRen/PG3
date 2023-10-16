@@ -5,64 +5,36 @@
 #include <cstdlib>
 #include <Windows.h>
 #include <functional>
-
-class Enemy {
+template <typename T1,typename T2,typename T3 = T1>
+class Comparison {
 public:
-	void Update();
-	void Approach();
-	void Shoot();
-	void Retreat();
-	enum Stats {
-		approach,
-		shoot,
-		retreat,
-
-		statsNum
+	Comparison(T1 a, T2 b) : a_(a), b_(b) {
 	};
-	Stats stats_ = retreat;
-	int frame_ = 0;
-private:
-	static void (Enemy::*spFuncTable[])();
-};
 
-void (Enemy::* Enemy::spFuncTable[])() = {
-	&Enemy::Approach,
-	&Enemy::Shoot,
-	&Enemy::Retreat
-};
+	T1 Min() {
+		if (a_ < b_) {
+			return static_cast<T3>(a_);
+		}
+		return static_cast<T3>(b_);
+	};
 
-void Enemy::Update() {
-	if (frame_ % 30 == 0) {
-		if (static_cast<int>(statsNum) == static_cast<Stats>(static_cast<int>(stats_) + 1)) {
-			stats_ = static_cast<Stats>(0);
-		}
-		else {
-			stats_ = static_cast<Stats>(static_cast<int>(stats_) + 1);
-		}
-		(this->*spFuncTable[static_cast<size_t>(stats_)])();
-	}
-	frame_++;
-}
-void Enemy::Approach() {
-	std::cout << "接近中" << std::endl;
-}
-void Enemy::Shoot() {
-	std::cout << "射撃中" << std::endl;
-}
-void Enemy::Retreat() {
-	std::cout << "離脱中" << std::endl;
-}
+	T1 a_;
+	T2 b_;
+};
 
 int main() {
-	Enemy enemy;
-	while (true) {
-		enemy.Update();
-		if (enemy.frame_ >= 300) {
-			std::cout << "やったか！？" << std::endl;
-			break;
-		}
-		Sleep(1000.0f*(1.0f / 60.0f));
-	}
+	Comparison<int,int> intint(2,3);
+	Comparison<int, float> intfloat(2, 3.0f);
+	Comparison<int, double> intdouble(2, 3.0);
+	Comparison<float, float> floatfloat(2.0f, 3.0f);
+	Comparison<double, float> doublefloat(2.0, 3.0f);
+
+	std::cout<< intint.Min() << std::endl;
+	std::cout << intfloat.Min() << std::endl;
+	std::cout << intdouble.Min() << std::endl;
+	std::cout << floatfloat.Min() << std::endl;
+	std::cout << doublefloat.Min() << std::endl;
+
 	return 0;
 }
 
