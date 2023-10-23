@@ -70,11 +70,19 @@ int main() {
 	IShape* iShapes[2];
 	for (int i = 0; i < 2; i++) {
 		if (i < 1) {
-			iShapes = new Circle(20.0f);
-		}
+			iShapes[i] = new Circle(20.0f);
+		}else
 		if (i < 2) {
-			iShapes = new Circle(20.0f);
+			iShapes[i] = new RectAngle(10.0f,5.0f);
 		}
+	}
+
+	for (int i = 0; i < 2; i++) {
+		iShapes[i]->Draw();
+	}
+
+	for (int i = 0; i < 2; i++) {
+		delete iShapes[i];
 	}
 	return 0;
 }
