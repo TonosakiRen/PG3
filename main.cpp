@@ -5,64 +5,77 @@
 #include <cstdlib>
 #include <Windows.h>
 #include <functional>
+#include <numbers>
 
-class Animal {
+class IShape {
 public:
-	Animal(const char* name);
-	~Animal();
-	virtual void Cry() = 0;
-protected:
-	std::string name_;
+	virtual void Size() = 0;
+	virtual void Draw() = 0;
 };
-Animal::Animal(const char* name) {
-	name_ = name;
-}
-Animal::~Animal() {
-	std::cout << name_ << "は死んだ" << std::endl;
-}
 
-class Cat 
-	: public Animal
+class Circle :
+public IShape
 {
 public:
-	using Animal::Animal;
-	void Cry() override;
-
+	Circle(float radius);
+	void Size() override;
+	void Draw() override;
+private:
+	float radius_;
+	float size_;
 };
-void Cat::Cry() {
-	std::cout << name_ << "は「ニャー」と鳴いた" << std::endl;
+
+Circle::Circle(float radius) {
+	radius_ = radius;
+	Size();
 }
 
-class Dog
-	: public Animal
+void Circle::Size() {
+	size_ = radius_ * radius_ * 3.14159f;
+}
+
+void Circle::Draw() {
+	std::cout << "この円の面積は" << size_ << std::endl;
+}
+
+
+class RectAngle :
+	public IShape
 {
 public:
-	using Animal::Animal;
-	void Cry() override;
-
+	RectAngle(float width, float height);
+	void Size() override;
+	void Draw() override;
+private:
+	float width_;
+	float height_;
+	float size_;
 };
 
-void Dog::Cry() {
-	std::cout << name_ << "は「ワン」と鳴いた" << std::endl;
+RectAngle::RectAngle(float width, float height) {
+	width_ = width;
+	height_ = height;
+	Size();
+}
+
+void RectAngle::Size() {
+	size_ = width_ * height_;
+}
+
+void RectAngle::Draw() {
+	std::cout << "この矩形の面積は" << size_ << std::endl;
 }
 
 int main() {
-	Animal* animals[2];
+	IShape* iShapes[2];
 	for (int i = 0; i < 2; i++) {
 		if (i < 1) {
-			animals[i] = new Cat("たま");
+			iShapes = new Circle(20.0f);
 		}
-		else {
-			animals[i] = new Dog("ぽち");
+		if (i < 2) {
+			iShapes = new Circle(20.0f);
 		}
 	}
-	for (int i = 0; i < 2; i++) {
-		animals[i]->Cry();
-	}
-	for (int i = 0; i < 2; i++) {
-		delete animals[i];
-	}
-
 	return 0;
 }
 
