@@ -6,63 +6,63 @@
 #include <Windows.h>
 #include <functional>
 
-class Enemy {
+class Animal {
 public:
-	void Update();
-	void Approach();
-	void Shoot();
-	void Retreat();
-	enum Stats {
-		approach,
-		shoot,
-		retreat,
+	Animal(const char* name);
+	~Animal();
+	virtual void Cry() = 0;
+protected:
+	std::string name_;
+};
+Animal::Animal(const char* name) {
+	name_ = name;
+}
+Animal::~Animal() {
+	std::cout << name_ << "は死んだ" << std::endl;
+}
 
-		statsNum
-	};
-	Stats stats_ = retreat;
-	int frame_ = 0;
-private:
-	static void (Enemy::*spFuncTable[])();
+class Cat 
+	: public Animal
+{
+public:
+	using Animal::Animal;
+	void Cry() override;
+
+};
+void Cat::Cry() {
+	std::cout << name_ << "は「ニャー」と鳴いた" << std::endl;
+}
+
+class Dog
+	: public Animal
+{
+public:
+	using Animal::Animal;
+	void Cry() override;
+
 };
 
-void (Enemy::* Enemy::spFuncTable[])() = {
-	&Enemy::Approach,
-	&Enemy::Shoot,
-	&Enemy::Retreat
-};
-
-void Enemy::Update() {
-	if (frame_ % 30 == 0) {
-		if (static_cast<int>(statsNum) == static_cast<Stats>(static_cast<int>(stats_) + 1)) {
-			stats_ = static_cast<Stats>(0);
-		}
-		else {
-			stats_ = static_cast<Stats>(static_cast<int>(stats_) + 1);
-		}
-		(this->*spFuncTable[static_cast<size_t>(stats_)])();
-	}
-	frame_++;
-}
-void Enemy::Approach() {
-	std::cout << "接近中" << std::endl;
-}
-void Enemy::Shoot() {
-	std::cout << "射撃中" << std::endl;
-}
-void Enemy::Retreat() {
-	std::cout << "離脱中" << std::endl;
+void Dog::Cry() {
+	std::cout << name_ << "は「ワン」と鳴いた" << std::endl;
 }
 
 int main() {
-	Enemy enemy;
-	while (true) {
-		enemy.Update();
-		if (enemy.frame_ >= 300) {
-			std::cout << "やったか！？" << std::endl;
-			break;
+	Animal* animals[2];
+	for (int i = 0; i < 2; i++) {
+		if (i < 1) {
+			animals[i] = new Cat("たま");
 		}
-		Sleep(static_cast<DWORD>(1000.0f*(1.0f / 60.0f)));
+		else {
+			animals[i] = new Dog("ぽち");
+		}
 	}
+	for (int i = 0; i < 2; i++) {
+		animals[i]->Cry();
+	}
+	for (int i = 0; i < 2; i++) {
+		delete animals[i];
+	}
+
 	return 0;
 }
 
