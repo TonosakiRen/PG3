@@ -10,8 +10,6 @@ int Rand(int min, int max) {
 	return min + (int)(rand() * (max - min + 1.0) / (1.0 + RAND_MAX));
 }
 
-typedef void (*Pfunc)(bool,int);
-
 void SetTime(std::function<void()> func, int second) {
 	Sleep(second * 1000);
 	func();
