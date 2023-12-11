@@ -51,7 +51,7 @@ int main() {
       "Yurakucho"
     };
     while (true) {
-        std::cout << "•\Ž¦‚·‚é”N‘ã‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢(1970,2019,2022)" << std::endl;
+        std::cout << "è¡¨ç¤ºã™ã‚‹å¹´ä»£ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„(1970,2019,2022)" << std::endl;
         int era = 0;
         scanf_s("%d", &era);
         bool correctEra = true;
@@ -74,7 +74,7 @@ int main() {
             auto it = std::find(stationNames.begin(), stationNames.end(), "Nishinippori");
             if (it == stationNames.end()) {
                 it = std::find(stationNames.begin(), stationNames.end(), "Nippori");
-                stationNames.insert(it, "Nishinippori");
+                stationNames.insert(++it, "Nishinippori");
             }
             it = std::find(stationNames.begin(), stationNames.end(), "TakanawaGateway");
             if (it != stationNames.end()) {
@@ -87,12 +87,12 @@ int main() {
             auto it = std::find(stationNames.begin(), stationNames.end(), "Nishinippori");
             if (it == stationNames.end()) {
                 it = std::find(stationNames.begin(), stationNames.end(), "Nippori");
-                stationNames.insert(it, "Nishinippori");
+                stationNames.insert(++it, "Nishinippori");
             }
             it = std::find(stationNames.begin(), stationNames.end(), "TakanawaGateway");
             if (it == stationNames.end()) {
                 it = std::find(stationNames.begin(), stationNames.end(), "Shinagawa");
-                stationNames.insert(it, "TakanawaGateway");
+                stationNames.insert(++it, "TakanawaGateway");
             }
         }
             break;
