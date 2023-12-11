@@ -26,7 +26,7 @@ int main() {
       "Ueno",
       "Uguisudani",
       "Nippori",
-      "Nishinippori",
+      "Nishi-Nippori",
       "Tabata",
       "Komagome",
       "Sugamo",
@@ -59,7 +59,7 @@ int main() {
         {
         case era1970:
         {
-            auto it = std::find(stationNames.begin(), stationNames.end(), "Nishinippori");
+            auto it = std::find(stationNames.begin(), stationNames.end(), "Nishi-Nippori");
             if (it != stationNames.end()) {
                 stationNames.erase(it);
             }
@@ -71,10 +71,10 @@ int main() {
             break;
         case era2019:
         {
-            auto it = std::find(stationNames.begin(), stationNames.end(), "Nishinippori");
+            auto it = std::find(stationNames.begin(), stationNames.end(), "Nishi-Nippori");
             if (it == stationNames.end()) {
                 it = std::find(stationNames.begin(), stationNames.end(), "Nippori");
-                stationNames.insert(++it, "Nishinippori");
+                stationNames.insert(++it, "Nishi-Nippori");
             }
             it = std::find(stationNames.begin(), stationNames.end(), "TakanawaGateway");
             if (it != stationNames.end()) {
@@ -84,10 +84,10 @@ int main() {
             break;
         case era2022:
         {
-            auto it = std::find(stationNames.begin(), stationNames.end(), "Nishinippori");
+            auto it = std::find(stationNames.begin(), stationNames.end(), "Nishi-Nippori");
             if (it == stationNames.end()) {
                 it = std::find(stationNames.begin(), stationNames.end(), "Nippori");
-                stationNames.insert(++it, "Nishinippori");
+                stationNames.insert(++it, "Nishi-Nippori");
             }
             it = std::find(stationNames.begin(), stationNames.end(), "TakanawaGateway");
             if (it == stationNames.end()) {
