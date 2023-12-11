@@ -11,8 +11,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <regex>
 
 int main() {
+
+    struct account {
+        std::string id;
+        int era_number;
+    };
 
 	std::string filePath = "PG3_05_02.txt";
 
@@ -20,21 +26,30 @@ int main() {
 
     std::string line;
 
-    std::vector<std::string> ids;
+    std::vector<account> accounts;
 
-    while (std::getline(file, line)) {
-       
-        std::istringstream iss(line);
-        std::string id;
+    std::regex pattern(R"(k(\d+)g(\d+)@g.neec.ac.jp)");
 
-        while (std::getline(iss, id, ',')) {
-            ids.push_back(id);
+    std::string id;
+
+    while (std::getline(file, id, ',')) {
+        std::smatch match;
+        int era_number = 0;
+        if (std::regex_search(id, match, pattern)) {
+            era_number = std::stoi(match[1].str() + match[2].str());
         }
-
+        accounts.push_back({ id,era_number });
     }
 
-    // ファイルを閉じる
     file.close();
+
+    std::sort(accounts.begin(), accounts.end(), [](const account& a, const account& b) {
+        return a.era_number < b.era_number;
+    });
+
+    for (auto& account : accounts) {
+        std::cout << account.id << std::endl;
+    }
 
 	return 0;
 }
