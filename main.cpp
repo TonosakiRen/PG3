@@ -9,11 +9,42 @@
 #include <string>
 
 int main() {
-	std::list <const char*> stationNames;
-	const char* str = "AAA";
-	stationNames.push_back(str);
 
-	std::cout << stationNames.front() << std::endl;
+    while (true) {
+        std::list <const char*> stationNames = {
+       "Tokyo",
+       "Kanda",
+       "Akihabara",
+       "Okachimachi",
+       "Ueno",
+       "Uguisudani",
+       "Nippori",
+       "Nishinippori",
+       "Tabata",
+       "Komagome",
+       "Sugamo",
+       "Otsuka",
+       "Ikebukuro",
+       "Mejiro",
+       "Takadanobaba",
+       "Shin-Okubo",
+       "Shinjuku",
+       "Yoyogi",
+       "Harajuku",
+       "Shibuya",
+       "Ebisu",
+       "Meguro",
+       "Gotanda",
+       "Osaki",
+       "Shinagawa",
+       "TakanawaGateway",
+       "Tamachi",
+       "Hamamatsucho",
+       "Shimbashi",
+       "Yurakucho"
+        };
+
+    }
 
 	return 0;
 }
