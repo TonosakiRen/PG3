@@ -68,7 +68,6 @@ int main() {
 		}
 
 		//mapChipの処理
-		//th.join();
 		for (int y = 0; y < data.size();y++) {
 			for (int x = 0; x < data[y].size();x++) {
 				std::cout << data[y][x] << ",";
